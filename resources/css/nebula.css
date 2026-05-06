@@ -1,0 +1,111 @@
+/* NEBULA GLASS - Nebula Background */
+
+body {
+  background: linear-gradient(135deg, var(--color-void-black) 0%, var(--color-deep-space) 50%, #2d1b4e 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.nebula-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.nebula-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: nebula-float 20s ease-in-out infinite;
+}
+
+.nebula-orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--color-nebula-purple) 0%, transparent 70%);
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.nebula-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--color-plasma-magenta) 0%, transparent 70%);
+  top: 50%;
+  right: -150px;
+  animation-delay: -5s;
+}
+
+.nebula-orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--color-electric-cyan) 0%, transparent 70%);
+  bottom: -100px;
+  left: 30%;
+  animation-delay: -10s;
+}
+
+.nebula-orb-4 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--color-aurora-green) 0%, transparent 70%);
+  top: 30%;
+  left: 10%;
+  animation-delay: -15s;
+}
+
+@keyframes nebula-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, 30px) scale(1.1); }
+  50% { transform: translate(20px, 60px) scale(0.95); }
+  75% { transform: translate(-30px, 20px) scale(1.05); }
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--color-starlight);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: particle-float 15s linear infinite;
+}
+
+@keyframes particle-float {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+}
+
+.iridescent-text {
+  background: linear-gradient(135deg, var(--color-electric-cyan), var(--color-plasma-magenta), var(--color-nebula-purple), var(--color-aurora-green));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: iridescent-shift 8s ease infinite;
+}
+
+@keyframes iridescent-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.chromatic-hover:hover {
+  animation: chromatic-pulse 0.3s ease;
+}
+
+@keyframes chromatic-pulse {
+  0% { filter: none; }
+  50% { filter: url('../svg/filters.svg#chromatic-aberration'); }
+  100% { filter: none; }
+}

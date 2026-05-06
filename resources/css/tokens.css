@@ -1,0 +1,123 @@
+/* NEBULA GLASS Design Tokens */
+:root {
+  /* Colors */
+  --color-void-black: #0a0a0f;
+  --color-deep-space: #1a1a2e;
+  --color-nebula-purple: #7c3aed;
+  --color-plasma-magenta: #ec4899;
+  --color-electric-cyan: #06b6d4;
+  --color-aurora-green: #10b981;
+  --color-starlight: #f8fafc;
+  --glass-tint-1: rgba(124, 58, 237, 0.1);
+  --glass-tint-2: rgba(236, 72, 153, 0.15);
+  --glass-tint-3: rgba(6, 182, 212, 0.1);
+  --color-success: var(--color-aurora-green);
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: var(--color-electric-cyan);
+  
+  /* Typography */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-display: 'Space Grotesk', sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --leading-normal: 1.5;
+  --tracking-normal: 0;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-glass-sm: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+  --shadow-glass-md: 0 4px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+  --shadow-glass-lg: 0 10px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+  --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.5);
+  --glow-magenta: 0 0 20px rgba(236, 72, 153, 0.5);
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.5);
+  --glow-green: 0 0 20px rgba(16, 185, 129, 0.5);
+  --depth-1: 0 2px 4px rgba(0,0,0,0.3);
+  --depth-2: 0 4px 8px rgba(0,0,0,0.4);
+  --depth-3: 0 8px 16px rgba(0,0,0,0.5);
+  --depth-4: 0 16px 32px rgba(0,0,0,0.6);
+  
+  /* Blur */
+  --blur-sm: blur(4px);
+  --blur-md: blur(8px);
+  --blur-lg: blur(12px);
+  --blur-xl: blur(16px);
+  --blur-2xl: blur(24px);
+  
+  /* Noise */
+  --noise-light: 0.05;
+  --noise-medium: 0.1;
+  --noise-heavy: 0.15;
+  --noise-extreme: 0.2;
+  
+  /* Z-Index */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* 3D */
+  --perspective-sm: 500px;
+  --perspective-md: 1000px;
+  --perspective-lg: 1500px;
+  --perspective-xl: 2000px;
+  --rotate-x-sm: rotateX(2deg);
+  --rotate-x-md: rotateX(5deg);
+  --rotate-y-sm: rotateY(2deg);
+  --rotate-y-md: rotateY(5deg);
+  --translate-z-1: translateZ(10px);
+  --translate-z-2: translateZ(20px);
+  --translate-z-3: translateZ(30px);
+  --translate-z-4: translateZ(40px);
+  
+  /* Glass Opacity */
+  --glass-opacity-1: 0.1;
+  --glass-opacity-2: 0.2;
+  --glass-opacity-3: 0.3;
+  --glass-opacity-4: 0.4;
+  --glass-opacity-5: 0.5;
+}

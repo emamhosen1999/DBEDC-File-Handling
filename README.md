@@ -1,379 +1,227 @@
-# DBEDC File Tracker System
+# DBEDC File Tracker
 
-A comprehensive web-based file and task tracking system built with vanilla PHP, HTML, CSS, and JavaScript. Designed for Namecheap shared hosting environments.
+A modern Laravel-based file tracking system for managing letters, tasks, and documents with departmental workflow automation.
 
-## 📋 Features
+## Features
 
-- **Google OAuth Authentication** - Secure login with Google accounts
-- **Letter Management** - Upload and track incoming letters with PDF attachments
-- **Task Assignment** - Create and assign tasks to individuals or departments
-- **Status Tracking** - Track task progress (Pending → In Progress → Completed)
-- **Analytics Dashboard** - View statistics and completion rates
-- **Workflow Automation** - Automated task escalation, deadline reminders, and smart assignment
-- **PWA Support** - Install as mobile app with offline capabilities
-- **Responsive Design** - Works on desktop and mobile devices
+- **Letter Management**: Track incoming/outgoing letters with reference numbers, stakeholders, and deadlines
+- **Task Management**: Create and assign tasks with status tracking and priority levels
+- **Department Hierarchy**: Organize users into departments with parent-child relationships
+- **User Authentication**: Multi-provider authentication (Google, WeChat, Email) via Laravel Breeze
+- **Real-time Notifications**: In-app notifications with push notification support
+- **Activity Logging**: Track all user actions for audit purposes
+- **PWA Support**: Progressive Web App with offline functionality
+- **Modern UI**: Nebula Glass design system with glassmorphism effects
+- **API Endpoints**: RESTful API for mobile and third-party integrations
+- **Scheduled Tasks**: Automated deadline reminders and database backups
 
-## 🤖 Workflow Automation
+## Tech Stack
 
-The system includes advanced workflow automation features to improve productivity and ensure timely task completion:
+- **Backend**: Laravel 13.7, PHP 8.2+
+- **Frontend**: Livewire 4.x, Alpine.js, Tailwind CSS
+- **Database**: MySQL with ULID primary keys
+- **Authentication**: Laravel Breeze with Sanctum API tokens
+- **Design**: Nebula Glass (custom glassmorphism design system)
+- **PWA**: Service Worker with offline caching
 
-### Automated Features
-
-- **Deadline Reminders**: Automatic notifications sent 2 days before task due dates
-- **Overdue Task Escalation**: Tasks overdue by 3+ days are automatically escalated to department managers
-- **Smart Task Assignment**: Auto-assign tasks to users with the least workload in the relevant department
-- **Periodic Reviews**: Automatic creation of review tasks for letters older than 6 months
-
-### Manual Controls
-
-- **Workflow Dashboard**: Admin/Manager interface to monitor overdue tasks and upcoming deadlines
-- **Manual Escalation**: Ability to manually escalate any task to department managers
-- **Automation Triggers**: Run workflow automation on-demand from the dashboard
-
-### Cron Job Setup
-
-Set up automated workflow processing by adding this to your crontab:
-
-```bash
-# Run workflow automation hourly
-0 * * * * /usr/bin/php /path/to/your/site/cron-workflow.php
-```
-
-Or for Windows Task Scheduler:
-
-```batch
-schtasks /create /tn "DBEDC Workflow Automation" /tr "php D:\path\to\site\cron-workflow.php" /sc hourly
-```
-
-## � Advanced Reporting System
-
-The system provides comprehensive reporting and analytics capabilities for data-driven decision making:
-
-### Report Builder Features
-
-- **Custom Report Creation**: Build reports with flexible filters and grouping options
-- **Multiple Data Sources**: Generate reports from letters, tasks, activities, and user data
-- **Advanced Filtering**: Filter by date ranges, departments, stakeholders, status, and priority
-- **Dynamic Grouping**: Group results by department, stakeholder, priority, status, or time periods
-- **Real-time Generation**: Generate reports instantly with live data
-
-### Analytics Dashboard
-
-- **Key Performance Indicators**: Track completion rates, average processing times, and overdue items
-- **Trend Analysis**: Visualize performance trends over time (3, 6, or 12 months)
-- **Department Comparison**: Compare performance across different departments
-- **Interactive Charts**: Built-in charting with completion rates and processing metrics
-
-### Report Management
-
-- **Save Custom Reports**: Save and reuse frequently used report configurations
-- **Scheduled Reports**: Automate report generation and email delivery
-- **Export Options**: Export reports to CSV or JSON formats
-- **Public Reports**: Share reports with all users or keep them private
-
-### Scheduled Reports Setup
-
-Set up automated report delivery by adding this to your crontab:
-
-```bash
-# Run scheduled reports weekly (Mondays at 9 AM)
-0 9 * * 1 /usr/bin/php /path/to/your/site/cron-reports.php
-```
-
-Or for Windows Task Scheduler:
-
-```batch
-schtasks /create /tn "DBEDC Scheduled Reports" /tr "php D:\path\to\site\cron-reports.php" /sc weekly /d MON /st 09:00
-```
-
-## �🚀 Installation Guide
+## Installation
 
 ### Prerequisites
 
-- Web hosting with PHP 8.0 or higher
-- MySQL 5.7 or higher
-- Google Cloud Console account (for OAuth)
+- PHP 8.2 or higher
+- Composer
+- Node.js 18+ and NPM
+- MySQL 8.0+
 
-### Quick Installation
+### Setup Steps
 
-1. **Upload Files**: Upload all files to your web root directory
-2. **Access Installer**: Visit `https://yourdomain.com/install.php`
-3. **Follow 6-Step Wizard**:
-   - Database configuration
-   - OAuth setup
-   - Admin email designation
-   - Branding customization
-   - Email configuration
-   - Automated final setup
-4. **Admin Login**: Log in with Google using the designated admin email
-
-### Automated Setup
-
-The installer automatically configures:
-- VAPID keys for push notifications
-- Notification and email settings
-- Security and system preferences
-- Default stakeholders and departments
-- Complete system initialization
-8. Click **Import** tab
-9. Upload `sql/migration.sql`
-10. Click **Go** to execute
-
-### Step 3: Configure Database Connection
-
-1. Open `includes/db.php`
-2. Update these lines:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'yourusername_filetracker');
-   define('DB_USER', 'yourusername_dbuser');
-   define('DB_PASS', 'your_secure_password');
-   ```
-3. Set `DEV_MODE` to `false` in production:
-   ```php
-   define('DEV_MODE', false);
-   ```
-4. Save the file
-
-### Step 4: Google OAuth Setup
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Create a new project or select existing
-3. Navigate to **APIs & Services** → **Credentials**
-4. Click **Create Credentials** → **OAuth 2.0 Client ID**
-5. Configure OAuth consent screen:
-   - User Type: External
-   - App name: File Tracker
-   - User support email: your email
-   - Developer contact: your email
-6. Create OAuth 2.0 Client ID:
-   - Application type: Web application
-   - Name: File Tracker
-   - Authorized redirect URIs: `https://yourdomain.com/callback.php`
-7. Copy the **Client ID** and **Client Secret**
-
-### Step 5: Configure OAuth Credentials
-
-1. Open `login.php`
-2. Update these lines:
-   ```php
-   define('GOOGLE_CLIENT_ID', 'YOUR_CLIENT_ID.apps.googleusercontent.com');
-   define('GOOGLE_CLIENT_SECRET', 'YOUR_CLIENT_SECRET');
-   define('GOOGLE_REDIRECT_URI', 'https://yourdomain.com/callback.php');
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd dbedc-file-tracker-laravel
    ```
 
-3. Open `callback.php`
-4. Update the same credentials (same as login.php)
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-### Step 6: Set File Permissions
+3. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Configure database in `.env`**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=dbedc_file_tracker
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+
+5. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+7. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+## Legacy Data Migration
+
+To migrate data from the legacy PHP application:
+
+1. **Add legacy database credentials to `.env`**
+   ```env
+   LEGACY_DB_HOST=localhost
+   LEGACY_DB_PORT=3306
+   LEGACY_DB_NAME=file_tracker
+   LEGACY_DB_USER=root
+   LEGACY_DB_PASSWORD=
+   ```
+
+2. **Run migration command**
+   ```bash
+   php artisan app:migrate-legacy-data
+   ```
+
+## Scheduled Tasks
+
+The application includes scheduled tasks for:
+
+- **Deadline Reminders**: Daily at 8:00 AM - Sends notifications for tasks/letters due within 3 days
+- **Email Queue Processing**: Every 5 minutes - Processes pending email notifications
+- **Database Backup**: Daily at 2:00 AM - Creates compressed database backups
+
+To enable scheduled tasks, add the following cron entry:
 
 ```bash
-chmod 755 /public_html
-chmod 755 /public_html/assets
-chmod 777 /public_html/assets/uploads
-chmod 644 /public_html/*.php
-chmod 644 /public_html/.htaccess
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-### Step 7: Test Installation
+## API Endpoints
 
-1. Visit `https://yourdomain.com/`
-2. You should see the login page
-3. Click **Sign in with Google**
-4. Grant permissions
-5. You'll be redirected to the dashboard
+All API endpoints are protected with `auth:sanctum` middleware:
 
-## 🔧 Configuration
+- **Letters**: `/api/letters` (GET, POST, PUT, DELETE)
+- **Tasks**: `/api/tasks` (GET, POST, PUT, DELETE)
+- **Departments**: `/api/departments` (GET, POST, PUT, DELETE)
+- **Users**: `/api/users` (GET, POST, PUT, DELETE)
+- **Stakeholders**: `/api/stakeholders` (GET, POST, PUT, DELETE)
+- **Settings**: `/api/settings` (GET, POST, PUT, DELETE)
+- **Notifications**: `/api/notifications` (GET, POST, PUT, DELETE)
+- **Activities**: `/api/activities` (GET)
 
-### Changing Upload Limits
+## File Storage
 
-Edit `.htaccess`:
-```apache
-php_value upload_max_filesize 10M
-php_value post_max_size 10M
+File uploads are configured in `config/filesystems.php`:
+
+- **Local Storage**: `storage/app/uploads` (private)
+- **Public Storage**: `storage/app/public` (public via `/storage`)
+
+To create the storage link:
+```bash
+php artisan storage:link
 ```
 
-### Enabling HTTPS Redirect
+## Social Authentication
 
-Uncomment these lines in `.htaccess`:
-```apache
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-```
+Configure OAuth providers in `config/services.php`:
 
-### Customizing Department Names
+- **Google**: Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env`
+- **WeChat**: Set `WECHAT_APP_ID` and `WECHAT_APP_SECRET` in `.env`
 
-Edit `dashboard.php` and add your departments to form dropdowns.
+## Development
 
-## 📱 PWA Installation
-
-### On Mobile (iOS/Android)
-
-1. Open the dashboard in Safari (iOS) or Chrome (Android)
-2. Tap the Share button
-3. Select "Add to Home Screen"
-4. The app will appear on your home screen like a native app
-
-### On Desktop (Chrome/Edge)
-
-1. Open the dashboard in Chrome or Edge
-2. Look for the install icon in the address bar
-3. Click "Install"
-4. The app will open in its own window
-
-## 🔐 Security Best Practices
-
-1. **Change Database Password**: Use a strong, unique password
-2. **Enable HTTPS**: Get a free SSL certificate from your hosting provider
-3. **Regular Backups**: Schedule automatic database backups in cPanel
-4. **Update PHP**: Keep PHP version up to date
-5. **Monitor Logs**: Check `error.log` for suspicious activity
-6. **Restrict OAuth**: Only add authorized users in Google Console
-
-## 📊 Usage Guide
-
-### Adding a Letter
-
-1. Click **Add Letter** tab
-2. Fill in:
-   - Reference Number (e.g., ICT-862-SKP-593)
-   - Stakeholder (IE, JV, RHD, ED)
-   - Subject
-   - Upload PDF file
-   - TenCent Docs link (optional)
-   - Received date
-   - Priority
-3. Click **Add Letter**
-4. After creation, you can add tasks
-
-### Creating Tasks
-
-1. After adding a letter, the task creation section appears
-2. For each task:
-   - Enter task description
-   - Assign to individual or group (e.g., "QCD Team")
-   - Click **Create Task**
-3. Click **Add Another Task** for multiple tasks
-
-### Updating Task Status
-
-1. Go to **My Tasks** or **All Tasks**
-2. Click **Update** on any task
-3. Select new status (Pending → In Progress → Completed)
-4. Add optional comment
-5. Click **Update**
-
-### Viewing Analytics
-
-1. Click **Analytics** tab
-2. View:
-   - Total tasks count
-   - Status distribution
-   - Stakeholder distribution
-   - Average completion time
-   - Recent activity
-
-## 🐛 Troubleshooting
-
-### "Database connection failed"
-
-- Check credentials in `includes/db.php`
-- Verify database exists in phpMyAdmin
-- Ensure user has ALL PRIVILEGES
-
-### "Google OAuth Error"
-
-- Verify Client ID and Secret are correct
-- Check Redirect URI matches exactly
-- Ensure OAuth consent screen is published
-
-### "Failed to upload file"
-
-- Check `assets/uploads` folder has 777 permissions
-- Verify upload limits in `.htaccess`
-- Ensure disk space available
-
-### PWA not installing
-
-- Must be served over HTTPS
-- Check `manifest.json` paths are correct
-- Clear browser cache and try again
-
-### Tasks not appearing
-
-- Check user department matches task assignment
-- Verify task was created successfully (check database)
-- Try refreshing the page
-
-## 📝 API Endpoints
-
-### Letters
-- `GET api/letters.php` - List letters
-- `GET api/letters.php?id={id}` - Get letter details
-- `POST api/letters.php` - Create letter (multipart/form-data)
-- `PATCH api/letters.php` - Update letter
-- `DELETE api/letters.php` - Delete letter
-
-### Tasks
-- `GET api/tasks.php?view=my` - My tasks
-- `GET api/tasks.php?view=all` - All tasks
-- `GET api/tasks.php?id={id}` - Task details
-- `POST api/tasks.php` - Create task
-- `PATCH api/tasks.php` - Update task
-- `DELETE api/tasks.php` - Delete task
-
-### Analytics
-- `GET api/analytics.php?type=overview` - Overview stats
-- `GET api/analytics.php?type=status_distribution` - Status breakdown
-- `GET api/analytics.php?type=stakeholder_distribution` - Stakeholder stats
-
-### Users
-- `GET api/users.php?me` - Current user profile
-- `GET api/users.php?search={query}` - Search users
-- `PATCH api/users.php` - Update profile
-
-## 🔄 Maintenance
-
-### Database Backup
+### Running Tests
 
 ```bash
-# Via command line (if SSH access available)
-mysqldump -u username -p database_name > backup.sql
-
-# Or use cPanel → Backup Wizard
+php artisan test
 ```
 
-### Clearing Cache
+### Code Style
 
-Delete service worker cache by incrementing version in `sw.js`:
-```javascript
-const CACHE_NAME = 'file-tracker-v1.1'; // Change version
+The project follows Laravel coding standards. Run:
+
+```bash
+php artisan pint
 ```
 
-### Updating the System
+## Deployment
 
-1. Backup database and files
-2. Upload new files via FTP
-3. Clear browser cache
-4. Test all functionality
+### Shared Hosting
 
-## 📧 Support
+1. Upload all files to the server
+2. Set `APP_ENV=production` in `.env`
+3. Run `php artisan optimize`
+4. Run `php artisan config:cache`
+5. Run `php artisan route:cache`
+6. Ensure storage directory is writable
+7. Configure cron job for scheduled tasks
 
-For issues or questions:
-1. Check the troubleshooting section above
-2. Review error.log file for detailed errors
-3. Contact your system administrator
+### Environment Variables for Production
 
-## 📄 License
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
 
-Proprietary - DBEDC Internal Use Only
+# Database
+DB_HOST=your-db-host
+DB_DATABASE=your-db-name
+DB_USERNAME=your-db-user
+DB_PASSWORD=your-db-password
 
-## 🙏 Credits
+# OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+WECHAT_APP_ID=your-wechat-app-id
+WECHAT_APP_SECRET=your-wechat-app-secret
+```
 
-Developed for DBEDC file handling operations.
+## Project Structure
 
----
+```
+app/
+├── Console/Commands/      # Artisan commands (scheduler, migration)
+├── Http/Controllers/
+│   ├── Api/              # API controllers
+│   └── Auth/             # Authentication controllers
+├── Http/Resources/       # API resources
+├── Models/               # Eloquent models
+├── Services/             # Business logic services
+└── Traits/               # Reusable traits (HasUlid)
 
-**Version:** 1.0  
-**Last Updated:** February 2026  
-**Tested On:** Namecheap Shared Hosting, PHP 8.2, MySQL 8.0
+resources/
+├── css/
+│   ├── app.css           # Main stylesheet
+│   ├── nebula.css        # Nebula Glass effects
+│   └── tokens.css        # Design tokens
+├── views/
+│   ├── components/       # Livewire components
+│   └── layouts/          # Blade layouts
+└── js/                   # JavaScript files
+
+public/
+├── sw.js                 # Service Worker
+└── manifest.json         # PWA manifest
+```
+
+## License
+
+This project is proprietary software. All rights reserved.
+
+## Support
+
+For support and questions, please contact the development team.
