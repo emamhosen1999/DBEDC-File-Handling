@@ -13,7 +13,7 @@ Route::post('/install', [InstallationController::class, 'process'])->name('insta
 // Apply check.installation middleware to all web routes
 Route::middleware('check.installation')->group(function () {
     Route::get('/', function () {
-        return view('welcome');
+        return redirect()->route(auth()->check() ? 'dashboard' : 'login');
     });
 
     Route::get('/dashboard', function () {
@@ -26,19 +26,32 @@ Route::middleware('check.installation')->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         // Letters
-        Route::get('/letters', function () {
-            return view('letters.index');
-        })->name('letters.index');
+        Route::get('/letters', \App\Livewire\Letters\Index::class)->name('letters.index');
+        Route::get('/letters/create', \App\Livewire\Letters\Create::class)->name('letters.create');
+        Route::get('/letters/{letter}', \App\Livewire\Letters\Show::class)->name('letters.show');
+        Route::get('/letters/{letter}/edit', \App\Livewire\Letters\Edit::class)->name('letters.edit');
+        Route::get('/letters/{letter}/download', [\App\Http\Controllers\LetterAttachmentController::class, 'download'])->name('letters.download');
 
         // Tasks
-        Route::get('/tasks', function () {
-            return view('tasks.index');
-        })->name('tasks.index');
+        Route::get('/tasks', \App\Livewire\Tasks\Index::class)->name('tasks.index');
+        Route::get('/tasks/create', \App\Livewire\Tasks\Create::class)->name('tasks.create');
+        Route::get('/tasks/{task}', \App\Livewire\Tasks\Show::class)->name('tasks.show');
+        Route::get('/tasks/{task}/edit', \App\Livewire\Tasks\Edit::class)->name('tasks.edit');
+
+        // Notifications
+        Route::get('/notifications', \App\Livewire\Notifications\Index::class)->name('notifications.index');
 
         // Administration
-        Route::get('/admin', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+        Route::middleware('can:access-admin')->prefix('admin')->name('admin.')->group(function () {
+            Route::get('/', function () {
+                return view('admin.dashboard');
+            })->name('dashboard');
+            Route::get('/users', \App\Livewire\Admin\Users\Index::class)->name('users.index');
+            Route::get('/users/{user}/edit', \App\Livewire\Admin\Users\Edit::class)->name('users.edit');
+            Route::get('/departments', \App\Livewire\Admin\Departments\Index::class)->name('departments.index');
+            Route::get('/stakeholders', \App\Livewire\Admin\Stakeholders\Index::class)->name('stakeholders.index');
+            Route::get('/activities', \App\Livewire\Admin\Activities\Index::class)->name('activities.index');
+        });
     });
 
     // Include auth routes (also protected by installation check)

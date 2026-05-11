@@ -21,14 +21,17 @@
                     <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
                         {{ __('Tasks') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
-                        {{ __('Admin') }}
-                    </x-nav-link>
+                    @can('access-admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 sm:gap-3">
+                <livewire:notifications.dropdown />
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-white/20 text-sm leading-4 font-medium rounded-md text-gray-200 bg-white/10 hover:bg-white/20 focus:outline-none transition ease-in-out duration-150">
@@ -85,9 +88,14 @@
             <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
                 {{ __('Tasks') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                {{ __('Notifications') }}
+            </x-responsive-nav-link>
+            @can('access-admin')
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                 {{ __('Admin') }}
             </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

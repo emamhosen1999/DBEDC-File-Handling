@@ -53,6 +53,23 @@ class FileUploadService
     }
 
     /**
+     * Store a file and return columns ready for the letters table.
+     *
+     * @return array{file_path: string, file_name: string, file_size: int, file_mime_type: string}
+     */
+    public function store(UploadedFile $file, string $directory = 'letters'): array
+    {
+        $result = $this->upload($file, $directory);
+
+        return [
+            'file_path' => $result['path'],
+            'file_name' => $result['original_name'],
+            'file_size' => $result['size'],
+            'file_mime_type' => $result['mime_type'],
+        ];
+    }
+
+    /**
      * Upload multiple files
      */
     public function uploadMultiple(array $files, string $directory = 'uploads'): array

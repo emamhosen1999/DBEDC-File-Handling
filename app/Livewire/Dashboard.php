@@ -19,12 +19,15 @@ class Dashboard extends Component
 
     public function mount()
     {
+        $userId = auth()->id();
         $this->totalLetters = Letter::count();
         $this->totalTasks = Task::count();
-        $this->pendingTasks = Task::where('status', 'pending')->count();
-        $this->completedTasks = Task::where('status', 'completed')->count();
+        $this->pendingTasks = Task::where('status', 'PENDING')->count();
+        $this->completedTasks = Task::where('status', 'COMPLETED')->count();
         $this->totalUsers = User::count();
-        $this->unreadNotifications = 0;
+        $this->unreadNotifications = $userId
+            ? Notification::where('user_id', $userId)->where('is_read', false)->count()
+            : 0;
     }
 
     public function render()

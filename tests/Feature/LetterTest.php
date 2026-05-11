@@ -133,6 +133,10 @@ class LetterTest extends TestCase
 
     public function test_requires_authentication(): void
     {
+        // Reset auth — setUp() logs us in by default
+        auth()->forgetGuards();
+        $this->app['auth']->forgetGuards();
+
         $response = $this->withHeaders(['Accept' => 'application/json'])
             ->getJson('/api/letters');
 
