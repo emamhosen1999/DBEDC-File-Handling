@@ -33,6 +33,7 @@ return new class extends Migration
             $table->char('created_by', 26)->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('reference');
             $table->index('status');

@@ -20,8 +20,8 @@ class AdminDashboard extends Component
     {
         $this->totalLetters = Letter::count();
         $this->totalTasks = Task::count();
-        $this->pendingTasks = Task::where('status', 'pending')->count();
-        $this->completedTasks = Task::where('status', 'completed')->count();
+        $this->pendingTasks = Task::where('status', 'PENDING')->count();
+        $this->completedTasks = Task::where('status', 'COMPLETED')->count();
         $this->totalUsers = User::count();
         $this->activeUsers = User::where('is_active', true)->count();
     }

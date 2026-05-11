@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->string('link', 500)->nullable();
             $table->boolean('is_read')->default(false);
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
 
             $table->index('user_id');
             $table->index('is_read');

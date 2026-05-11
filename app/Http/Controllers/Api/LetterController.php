@@ -13,8 +13,7 @@ class LetterController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Letter::query()
-            ->with(['department', 'assignedTo', 'stakeholder', 'createdBy'])
-            ->where('status', '!=', 'DELETED');
+            ->with(['department', 'assignedTo', 'stakeholder', 'createdBy']);
 
         if ($request->search) {
             $query->where(function ($q) use ($request) {
@@ -170,7 +169,7 @@ class LetterController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $letter = Letter::findOrFail($id);
-        $letter->update(['status' => 'DELETED']);
+        $letter->delete();
 
         return response()->json([
             'success' => true,
@@ -185,7 +184,7 @@ class LetterController extends Controller
             'ids.*' => 'exists:letters,id',
         ]);
 
-        $deleted = Letter::whereIn('id', $validated['ids'])->update(['status' => 'DELETED']);
+        $deleted = Letter::whereIn('id', $validated['ids'])->delete();
 
         return response()->json([
             'success' => true,
@@ -208,7 +207,6 @@ class LetterController extends Controller
 
         $letters = Letter::with('stakeholder')
             ->whereBetween('letter_date', [$startDate, $endDate])
-            ->where('status', '!=', 'DELETED')
             ->orderBy('letter_date')
             ->get();
 

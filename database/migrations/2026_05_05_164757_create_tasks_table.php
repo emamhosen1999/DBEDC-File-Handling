@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamp('completed_at')->nullable();
             $table->char('created_by', 26)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('letter_id');
             $table->index('assigned_to');

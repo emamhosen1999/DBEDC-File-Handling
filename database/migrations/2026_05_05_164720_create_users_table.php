@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->char('id', 26)->primary()->comment('ULID');
-            $table->string('google_id', 100)->unique();
+            $table->string('google_id', 100)->nullable()->unique();
             $table->string('email', 255)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('name', 255);
             $table->char('department_id', 26)->nullable();
             $table->enum('role', ['ADMIN', 'MANAGER', 'MEMBER', 'VIEWER'])->default('MEMBER');
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('wechat_openid', 100)->nullable();
             $table->string('wechat_unionid', 100)->nullable();
-            $table->string('provider', 50)->default('google');
+            $table->string('provider', 50)->default('email');
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
 
